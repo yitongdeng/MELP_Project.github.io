@@ -1,197 +1,123 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>A Moving Eulerian-Lagrangian Particle Method for Thin Film and Foam
-        Simulation</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes, minimal-ui">
-</head>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="assets/css/style.css">
+    </head><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Impulse Fluid | Fan Feng</title>
+<meta name="generator" content="Jekyll v3.9.2" />
+<meta property="og:title" content="Impulse Fluid" />
+<meta name="author" content="Fan Feng" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Impulse Fluid Simulation IEEE Transactions on Visualization and Computer Graphics (TVCG) Fan Feng, Jinyuan Liu, Shiying Xiong, Shuqi Yang, Yaorui Zhang, Bo Zhu [paper][video]" />
+<meta property="og:description" content="Impulse Fluid Simulation IEEE Transactions on Visualization and Computer Graphics (TVCG) Fan Feng, Jinyuan Liu, Shiying Xiong, Shuqi Yang, Yaorui Zhang, Bo Zhu [paper][video]" />
+<link rel="canonical" href="https://sking8.github.io/ImpulseFluid/" />
+<meta property="og:url" content="https://sking8.github.io/ImpulseFluid/" />
+<meta property="og:site_name" content="Fan Feng" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-02-23T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Impulse Fluid" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Fan Feng"},"dateModified":"2022-02-23T00:00:00+00:00","datePublished":"2022-02-23T00:00:00+00:00","description":"Impulse Fluid Simulation IEEE Transactions on Visualization and Computer Graphics (TVCG) Fan Feng, Jinyuan Liu, Shiying Xiong, Shuqi Yang, Yaorui Zhang, Bo Zhu [paper][video]","headline":"Impulse Fluid","mainEntityOfPage":{"@type":"WebPage","@id":"https://sking8.github.io/ImpulseFluid/"},"url":"https://sking8.github.io/ImpulseFluid/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://sking8.github.io/feed.xml" title="Fan Feng" /></head>
+<body><header class="site-header">
 
-<!-- Fonts -->
-<style>
-    .myFont {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-</style>
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Fan Feng</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
 
-<style>
-    .courier {
-        font-family: 'Courier New', Courier, monospace; margin-bottom: 2cm;
-    }
-</style>
+        <div class="trigger"><a class="page-link" href="/arts/">Arts</a><a class="page-link" href="/projects/">Projects</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+        <article class="post">
 
-<style>
-    .col-centered{
-        float: none;
-        margin: 0 auto;
-    }
-</style>
+    <!-- <header class="post-header">
+        <h1 class="post-title">Impulse Fluid</h1>
+    </header> -->
 
-<body>
-    <div id="app">
-        <v-app class="myFont">
-            <v-row justify="center" no-gutters>
-                <v-col class="py-4 text-center" :xl="7" :lg="7" :md="8" :sm="12" :xs="12">
-                    <!--  Title and teaser -->
-                    <v-row justify="center" class="mt-11"  no-gutters>
-                        <v-sheet tile>
-                            <div class="myFont"><h1>{{title}}</h1></div>
-                            <div style="line-height:65%;">
-                                <br>
-                            </div>
-                            <div class="myFont"><h3>SIGGRAPH 2022</h3></div>
-                        </v-sheet>
-                        <v-col :cols="12" class="mt-5" >
-                            <span v-for="author in authors" class="mr-4">
-                                <span v-if="author.link != null" >
-                                    <a :href=author.link>{{author.name}}</a>
-                                    <sup>{{author.sup}}</sup>
-                                </span>
-                                <span v-else>
-                                    {{author.name}}
-                                    <sup>{{author.sup}}</sup>
-                                </span>
-                            </span>
-                        </v-col>
+    <div class="post-content">
+        <h2 id="impulse-fluid-simulation">Impulse Fluid Simulation</h2>
+<p>IEEE Transactions on Visualization and Computer Graphics (TVCG)<br />
+<a href="https://sking8.github.io/"><b>Fan Feng</b><a>, <a href="https://jyl-pages.github.io/">Jinyuan Liu</a>, <a href="https://shiyingxiong.github.io/">Shiying Xiong</a>, <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9707648">Shuqi Yang</a>, <a href="http://portfolio.yaorui.info/">Yaorui Zhang</a>, <a href="https://cs.dartmouth.edu/~bozhu/">Bo Zhu</a><br />
+<b>[<a href="../../../assets/paper/impulse.pdf">paper</a>][<a href="https://youtu.be/MFAXIETFC9M">video</a>]</b></a></a></p>
 
-                        <v-col :cols="12" class="mt-2">
-                            <span v-for="(institution, index) in institutions" class="mr-4">
-                                <h5>{{institution}}</h5> 
-                            </span>
-                        </v-col>
-                        <v-img height="100%" class="mt-4"
-                               src="images/bubble_burst.jpg">
-                        </v-img>
-                    </v-row>
+<p><img src="../../../assets/img/paper/impulse.jpg" alt="impulse_fluid" /></p>
 
-                    <!--  Abstract -->
-                    <v-row justify="left" class="mt-11"  no-gutters>
-                        <v-col class="col-12 text-left">
-                            <div class="myFont"> <h3>Abstract</h3></div>
-                            <div class="myFont">
-                                {{abstract}}
-                            </div>
-                        </v-col>
-                    </v-row>
+<h2 id="abstract">Abstract</h2>
 
-                    <!--  Paper -->
-                    <v-row justify="left" class="mt-6"  no-gutters>
-                        <v-col class="col-12 text-left">
-                            <div class="myFont"> <h3>Paper</h3></div>
-                            <div style="line-height:35%;">
-                                <br>
-                            </div>
-                            <v-btn color="blue" dark href="documents/melp_paper.pdf" target="_blank"> PDF
-                                <v-icon class="ml-2 white--text" >mdi-cloud-download</v-icon>
-                            </v-btn>
-                        </v-col>
-                    </v-row>
+<p>We propose a new incompressible Navier–Stokes solver based on the impulse gauge transformation. The mathematical
+model of our approach draws from the impulse–velocity formulation of Navier–Stokes equations, which evolves the fluid impulse as an
+auxiliary variable of the system that can be projected to obtain the incompressible flow velocities at the end of each time step. We solve
+the impulse-form equations numerically on a Cartesian grid. At the heart of our simulation algorithm is a novel model to treat the
+impulse stretching and a harmonic boundary treatment to incorporate the surface tension effects accurately. We also build an impulse
+PIC/FLIP solver to support free-surface fluid simulation. Our impulse solver can naturally produce rich vortical flow details without
+artificial enhancements. We showcase this feature by using our solver to facilitate a wide range of fluid simulation tasks including
+smoke, liquid, and surface-tension flow. In addition, we discuss a convenient mechanism in our framework to control the scale and
+strength of the turbulent effects of fluid.</p>
 
-                    <!--  Video -->
-                    <v-row class="mt-7"  no-gutters>
-                        <div class="myFont"> <h3>Video</h3> <div style="line-height:45%;">
-                            <br>
-                        </div></div>
-                        <!-- <video controls="" preload="metadata" align="center" width="100%" style="display:block;   width:100%;">
-                            <source src="https://www.youtube.com/watch?v=xW-G7hm6SWQ&t=253s" type="video/mp4">
-                        </video> -->
-                    </v-row>
+<h2 id="video--results">Video / Results</h2>
 
-                    <!-- <v-row class="mt-0"  no-gutters>
-                        <div class="video-container">
-                            <iframe src="https://www.youtube.com/embed/xW-G7hm6SWQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                    </v-row> -->
+<div class="videoWrapper">
+<iframe width="100%" height="100%" src="https://www.youtube.com/embed/MFAXIETFC9M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+</div>
 
-                    <!--  Bibtex -->
-                    <v-row justify="left" class="mt-7"  no-gutters>
-                        <v-col class="col-12 text-left">
-                            <div class="myFont"> <h3>Citation</h3>
-                                <div style="line-height:15%;">
-                                    <br>
-                                </div></div>
-                            <div class="courier">
-@article{Deng2022MELP,<br>
-    &nbsp;title={A Moving Eulerian-Lagrangian Particle Method for Thin Film and Foam
-    Simulation}, <br>
-    &nbsp;author={Y. Deng and M. Wang and X. Kong and S. Xiong and Z. Xian and B. Zhu},<br>
-    &nbsp;journal={ACM Trans. Graph.},<br>
-    &nbsp;volume={41},<br>
-    &nbsp;number={4},<br>
-    &nbsp;article={154},<br>
-    &nbsp;year={2022}<br>
-}
-                            </div>
-                        </v-col>
-                    </v-row>
-                </v-col>
-            </v-row>
-        </v-app>
+<p><br /></p>
+<h2 id="citation">Citation</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@ARTICLE{9707648,
+  author={Feng, Fan and Liu, Jinyuan and Xiong, Shiying and Yang, Shuqi and Zhang, Yaorui and Zhu, Bo},
+  journal={IEEE Transactions on Visualization and Computer Graphics}, 
+  title={Impulse Fluid Simulation}, 
+  year={2022},
+  volume={},
+  number={},
+  pages={1-1},
+  doi={10.1109/TVCG.2022.3149466}}
+</code></pre></div></div>
+
     </div>
 
+</article>
 
-    <div class="row">
-        <div class="col-lg-7 col-centered">
-            <style>
-                .videoWrapper {
-                    position: relative;
-                    padding-bottom: 56.25%;
-                    /* 16:9 */
-                    padding-top: 25px;
-                    height: 0;
-                }
-        
-                .videoWrapper iframe {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                }
-            </style>
-            <div class="videoWrapper">
-                <iframe src="https://www.youtube.com/embed/xW-G7hm6SWQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-        </div>
     </div>
+</main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col one-third">
+      <!--<h2 class="footer-heading">Fan Feng</h2>-->
+        <ul class="contact-list">
+          <!-- <li class="p-name">Fan Feng</li> --><li><a class="u-email" href="mailto:fanfengng@yahoo.com">fanfengng@yahoo.com</a></li></ul>
+        <div class="social-links"><ul class="social-media-list"><li><a href="https://github.com/sking8" title="sking8"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a href="https://www.linkedin.com/in/fan-feng-4205b214b" title="fan-feng-4205b214b"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg></a></li></ul>
+</div>
+      </div>
+
+      <div class="footer-col one-third">
+        <span>Last Update: Feburary. 2022</span>
+      </div>
+
+      <div class="footer-col one-third">
+        <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=8aoNoTgxDcFPCO1557TTNfY29XiuTnsd0qMnMX78tMI&cl=ffffff&w=a"></script>
+      </div>
+    </div>
+
+  </div>
+</footer>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 
-
-<script>
-    var app = new Vue({
-        el: '#app',
-        vuetify: new Vuetify(),
-        data: {
-            title:'A Moving Eulerian-Lagrangian Particle Method for Thin Film and Foam Simulation',
-            abstract:'We present the Moving Eulerian-Lagrangian Particles (MELP), a novel mesh-free method for simulating incompressible fluid on thin films and foams. Employing a bi-layer particle structure, MELP jointly simulates detailed, vigorous flow and large surface deformation at high stability and efficiency. In addition, we design multi-MELP: a mechanism that facilitates the physically-based interaction between multiple MELP systems, to simulate bubble clusters and foams with non-manifold topological evolution. We showcase the efficacy of our method with a broad range of challenging thin film phenomena, including the Rayleigh-Taylor instability across double-bubbles, foam fragmentation with rim surface tension, recovery of the Plateau borders, Newton black films, as well as cyclones on bubble clusters.',
-            authors:[
-                {name:'Yitong Deng', link:null },
-                {name:'Mengdi Wang', link:'https://wang-mengdi.github.io/'},
-                {name:'Xiangxin Kong', link:null},
-                {name:'Shiying Xiong', link:'https://shiyingxiong.github.io/'},
-                {name:'Zangyueyang Xian', link:null},
-                {name:'Bo Zhu', link:'https://www.cs.dartmouth.edu/~bozhu/'},
-            ],
-            institutions:['Dartmouth College, Visual Computing Lab'],
-        },
-        methods:{
-            test(){
-                console.log("1234");
-            }
-        },
-        computed: {
-            cols () {
-                const { lg, sm } = this.$vuetify.breakpoint
-                return lg ? 6 : sm ? 9 : 8
-            },
-        },
-    })
-
-</script>
 </html>
